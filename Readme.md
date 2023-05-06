@@ -1,5 +1,8 @@
 # Documentation:
 
+## Design :
+
+This Client/Server Application is designed with a step-by-step implementation approach on top of the provided template. The Client GUI layout is designed in a user-friendly way to move around the buttons with ease to move the robot quickly. The class structure, its features, and client/server communication mechanisms are explained below.
 The classes and interfaces present in this project are
 * MyServer
 * MyServerCanvas
@@ -8,6 +11,24 @@ The classes and interfaces present in this project are
 * MyThreadedConnectionHandler
 * Robot
 * MyDateTimeService
+* 
+**MyServer** class has the base network connection code given as in the template and with added GUI that I developed with **Java SWING** and **Canvas** in **MyServerCanvas** class. This server is capable of handling more than 3 robots at the same time.
+**MyServerCanvas** is a **Graphical GUI Java AWT Canvas** it's used to draw the graphical grid, robots, and other information. This class presents all the drawings and supporting business logic and states.
+The Server GUI contains left and right panels. 
+
+The left side panel contains a canvas grid to show the robots' movements. On the right panel, I added some swing components to show information like No of clients connected, Connection status with clients, and a toggle button to show each robot client's past 3 positions information. Finally, a text field to set the collision margin for robots.
+We can enter the collision margin from the server GUI, and the previous positions toggle button can be clicked to see the last 3 positions of each robot on the canvas.
+
+**MyClient** class has the base network connection code given in the template and added business logic to create a robot object and send it to the server along with the positions and data updating logic.
+Buttons in the client GUI are provided with an additional tooltip feature which shows text on the tooltip when we place the cursor on it. An additional opt-out button is added to the client to switch 10-second automatic updates to the server. Furthermore, users can select the robot's speed from the slider developed by the swing **JSlider**.
+**MyCanvasCallback** is an interface that can set a number of clients connected from **MyServerCanvas** and receive on the Server class.
+
+**MyThreadedConnectionHandler** is mostly the same as the template. However, it receives a robot object from the network stream and sends it to the MyServerCanvas class, where it handles business logic is present.
+A robot class is created to add the required data to the robot object and transfer over the network from Clients to server. Only robot objects are used for network communication in this project.
+MyDateTimeService is used to get the date and time from the Calendar instance and to update the last message sent to the client.
+
+Client/Server communications happen between Client and Server classes by exchanging the data with the Robot class. All the required data is set to the Robot object and sent over the network. It is then received by the server's threaded connection handler and provides information to **MyServerCanvas** it then displays data on the GUI.
+
 
 ## How to run Applications ?
 
